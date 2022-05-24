@@ -1,4 +1,4 @@
-/* cabeçalho */
+/* cabeçalho
 body{
     overflow: hidden;
 }
@@ -6,7 +6,7 @@ body{
 .cabecalho {
     width: 100%;
     float: left;
-    padding: 3% 4%;
+    padding: 2% 3%;
 }
 
 .logo {
@@ -15,4 +15,4 @@ body{
     float: left;
     background: url(/public/logo.png) center center/168px no-repeat;
     font-size: 0;
-}
+} */

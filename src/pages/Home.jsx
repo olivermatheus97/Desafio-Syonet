@@ -1,11 +1,14 @@
 import React from "react";
-import "./home.css";
+import "./Home.css";
+import MapPage from "../components/Map/MapPage"
 
 function Home() {
-    return(
-        <header class="cabecalho">
-            <a href="index.html"><h1 class="logo">Syonet</h1></a>
-        </header>
+    return (
+        <div className="content">
+            <div className="cabecalho"></div>
+            {/* <a href="index.html"><h1 className="logo">Syonet</h1></a> */}
+            <MapPage />
+        </div>
     );
 }
 
