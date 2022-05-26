@@ -1,59 +1,36 @@
 import React from "react";
-import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import "./Map.css"
-import Home from "../../pages/Home";
 
-
-function MapPage() {
+//API DO GOOGLE
+function MapPage(props) {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: "AIzaSyCSw0seM_1HJp5FpT2vQtJeOxMUSuxoD2Y"
   })
-
+  //Ponto central caso o usuário não coloquei nem uma latitude ou longitude
   const centerPos = {
     lat: -16.710726,
     lng: -49.226850
   }
-  const [marker, setMarker] = React.useState([]);
-  const [selected, setSelected] = React.useState(null);
-  const onMapClick = React.useCallback((e) => {
-    setMarker(
-      {
-        lat: e.latLng.lat(),
-        lng: e.latLng.lng(),
-      });
-  }, []);
 
+  //Os props estão validando se existe objeto informado pelo usuário, caso não iria centralizar na posição fixa a cima
   return (
     <div className="Maps">
       {isLoaded ? (
         <GoogleMap
           mapContainerStyle={{ width: '100%', height: "80%" }}
-          center={centerPos}
+          center={props.posicaoMarker ? { lat: Number(props.posicaoMarker.latitude), lng: Number(props.posicaoMarker.longitude) } : centerPos}
           zoom={15}
           onChange={''}
-          onClick={onMapClick}>
-          <Marker
-            position={{ lat: marker.lat, lng: marker.lng }}
-            onClick={() => {
-              setSelected(marker);
-            }}
-          />
-          {
-            selected ? (
-              <InfoWindow
-                position={{ lat: selected.lat, lng: selected.lng }}
-                onCloseClick={() => {
-                  setSelected(null);
-                }}
-              >
-                <div>
-                  <h3>Loc: </h3>
-                  <p>{`Lat:${marker.lat}`}</p>
-                  <p>{`Lng:${marker.lng}`}</p>
-                </div>
-              </InfoWindow>
-            ) : null}
+        >
+          {props.posicaoMarker && (
+            // Marcador junto com validador de objeto.
+            <Marker
+              position={{ lat: Number(props.posicaoMarker.latitude), lng: Number(props.posicaoMarker.longitude) }}
+              label={props.posicaoMarker.texto}
+            />
+          )}
         </GoogleMap>
       ) : <></>}
     </div>)
